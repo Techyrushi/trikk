@@ -8,7 +8,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Sliders & banner
   initBannerSlider();
-  initSectionSliders();
+  initLoopingSlider({
+    sliderSelector: ".category-slider",
+    trackSelector: ".group-15",
+    itemSelector: ":scope > div",
+    speed: 0.35,
+  });
+  initLoopingSlider({
+    sliderSelector: ".top-picks-slider",
+    trackSelector: ".top-picks-track",
+    itemSelector: ":scope > [class^='product-box']",
+    speed: 0.4,
+  });
+  initLoopingSlider({
+    sliderSelector: ".best-sellers-slider",
+    trackSelector: ".best-sellers-track",
+    itemSelector: ":scope > [class^='product-box-']",
+    speed: 0.4,
+  });
 });
 
 function loadFragment(targetId, url, callback) {
@@ -162,74 +179,138 @@ function initBannerSlider() {
   }, 6000);
 }
 
-// Section sliders for product/category rows on smaller screens
-function initSectionSliders() {
-  // Only activate sliders on tablet/mobile where horizontal space is limited
-  if (window.innerWidth > 1024) return;
+function initLoopingSlider(config) {
+  const slider = document.querySelector(config.sliderSelector);
+  const track = slider ? slider.querySelector(config.trackSelector) : null;
 
-  // Top Picks section
-  initHorizontalSlider({
-    sectionSelector: ".pick-for-you",
-    itemSelector: '[class^="product-box"]',
-  });
-
-  // Best Sellers section
-  initHorizontalSlider({
-    sectionSelector: ".best-sellers",
-    itemSelector: '[class^="product-box-"]',
-  });
-
-  // Explore by Category section – reuse existing group-15 as track
-  initHorizontalSlider({
-    sectionSelector: ".category",
-    itemSelector: ".group-15 > div",
-    trackSelector: ".group-15",
-  });
-}
-
-function initHorizontalSlider(config) {
-  const section = document.querySelector(config.sectionSelector);
-  if (!section) return;
-
-  const existingTrack = config.trackSelector
-    ? section.querySelector(config.trackSelector)
-    : null;
+  if (!slider || !track || slider.dataset.loopingSlider === "ready") return;
 
   const items = Array.from(
-    (existingTrack || section).querySelectorAll(config.itemSelector)
+    track.querySelectorAll(config.itemSelector || ":scope > *")
   );
 
-  if (!items.length) return;
+  if (items.length < 2) return;
+  slider.dataset.loopingSlider = "ready";
 
-  let track;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+  if (prefersReducedMotion.matches) return;
 
-  if (existingTrack) {
-    track = existingTrack;
-  } else {
-    track = document.createElement("div");
-    track.className = "slider-track";
+  // Duplicate original cards once for seamless looping
+  const clones = items.map((node) => node.cloneNode(true));
+  clones.forEach((clone) => track.appendChild(clone));
 
-    items.forEach((item) => {
-      track.appendChild(item);
-    });
+  let baseWidth = 0;
+  let position = 0;
+  let isHovering = false;
+  let lastPointerX = null;
+  let manualVelocity = 0;
+  const autoSpeed = config.speed ?? 0.35;
+  const hoverAutoFactor = config.hoverAutoFactor ?? 0.25;
+  const manualScale = config.dragFactor ?? 0.45;
+  const manualFriction = config.dragFriction ?? 0.92;
 
-    section.appendChild(track);
+  function measureWidth() {
+    const totalWidth = track.scrollWidth;
+    baseWidth = totalWidth / 2;
+    if (baseWidth === 0) {
+      requestAnimationFrame(measureWidth);
+    }
   }
 
-  let index = 0;
-
-  function goTo(nextIndex) {
-    index = (nextIndex + items.length) % items.length;
-    const offset = -index * 100;
-    track.style.transform = `translateX(${offset}%)`;
+  function normalizePosition() {
+    if (!baseWidth) return;
+    position %= baseWidth;
+    if (position < 0) {
+      position += baseWidth;
+    }
   }
 
-  // Initial position
-  goTo(0);
+  function applyTransform() {
+    track.style.transform = `translate3d(-${position}px, 0, 0)`;
+  }
 
-  // Auto-advance
-  setInterval(() => {
-    goTo(index + 1);
-  }, 5000);
+  function animate() {
+    if (baseWidth) {
+      const activeAuto =
+        autoSpeed * (isHovering ? hoverAutoFactor : 1);
+      position += activeAuto + manualVelocity;
+      manualVelocity *= manualFriction;
+      if (Math.abs(manualVelocity) < 0.01) {
+        manualVelocity = 0;
+      }
+      normalizePosition();
+      applyTransform();
+    }
+    requestAnimationFrame(animate);
+  }
+
+  function nudgeBy(delta) {
+    if (!baseWidth) return;
+    manualVelocity -= delta * manualScale;
+  }
+
+  function handlePointerMove(clientX) {
+    if (!isHovering) return;
+    if (lastPointerX !== null) {
+      const delta = clientX - lastPointerX;
+      nudgeBy(delta);
+    }
+    lastPointerX = clientX;
+  }
+
+  slider.addEventListener("mouseenter", (event) => {
+    isHovering = true;
+    lastPointerX = event.clientX;
+  });
+
+  slider.addEventListener("mouseleave", () => {
+    isHovering = false;
+    lastPointerX = null;
+  });
+
+  slider.addEventListener("mousemove", (event) => {
+    handlePointerMove(event.clientX);
+  });
+
+  slider.addEventListener(
+    "touchstart",
+    (event) => {
+      isHovering = true;
+      lastPointerX = event.touches[0]?.clientX ?? null;
+    },
+    { passive: true }
+  );
+
+  slider.addEventListener(
+    "touchmove",
+    (event) => {
+      const touchX = event.touches[0]?.clientX ?? null;
+      if (touchX !== null) {
+        handlePointerMove(touchX);
+      }
+    },
+    { passive: true }
+  );
+
+  slider.addEventListener(
+    "touchend",
+    () => {
+      isHovering = false;
+      lastPointerX = null;
+    },
+    { passive: true }
+  );
+
+  window.addEventListener("resize", () => {
+    measureWidth();
+    normalizePosition();
+    applyTransform();
+  });
+
+  measureWidth();
+  applyTransform();
+  animate();
 }
 

@@ -165,197 +165,74 @@
   }
   
   .v .footer {
-    height: 351px;
-    margin-top: 1px;
     background-color: #1d1f24;
     width: 100%;
     display: flex;
     justify-content: center;
+    gap: 48px;
+    padding: 64px clamp(20px, 5vw, 80px);
     flex-wrap: wrap;
-    gap: 40px;
-    padding: 0 40px;
   }
-  
-  .v .group-3 {
-    margin-top: 55px;
-    width: 107px;
-    height: 157px;
+
+  .v .footer-column {
+    min-width: 180px;
+    max-width: 260px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
   }
-  
-  .v .shop {
-    width: 50px;
-    height: 23px;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  .v .footer-wide {
+    max-width: 320px;
+  }
+
+  .v .footer-heading {
     font-family: "Oxygen", Helvetica;
     font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 0;
-    line-height: normal;
-  }
-  
-  .v .best-sellers-new {
-    width: 103px;
-    height: 120px;
-    font-weight: 400;
     font-size: 18px;
-    line-height: 30px;
-    font-family: "Oxygen", Helvetica;
     color: #ffffff;
-    letter-spacing: 0;
+    letter-spacing: 0.2px;
   }
-  
-  .v .group-4 {
-    margin-top: 55px;
-    width: 235px;
-    height: 247px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+
+  .v .social-heading {
+    margin-top: 12px;
+    font-size: 16px;
+    letter-spacing: 1px;
   }
-  
-  .v .support {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 82px;
-    height: 23px;
-    font-family: "Oxygen", Helvetica;
-    font-weight: 700;
-    color: #ffffff;
-    font-size: 18px;
-    letter-spacing: 0;
-    line-height: normal;
-  }
-  
-  .v .FAQ-contact-us {
-    width: 231px;
-    height: 210px;
+
+  .v .footer-links {
     font-family: "Oxygen", Helvetica;
     font-weight: 400;
-    color: #ffffff;
-    font-size: 18px;
-    letter-spacing: 0;
-    line-height: 30px;
+    color: #d3d7e0;
+    font-size: 16px;
+    line-height: 28px;
   }
-  
-  .v .group-5 {
-    margin-top: 55px;
-    width: 162px;
-    height: 157px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+
+  .v .footer-contact {
+    max-width: 280px;
   }
-  
-  .v .about-trikk {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 117px;
-    height: 23px;
+
+  .v .footer-contact-details {
     font-family: "Oxygen", Helvetica;
-    font-weight: 700;
+    font-size: 16px;
+    color: #d3d7e0;
+    line-height: 28px;
+  }
+
+  .v .footer-contact-details .highlight {
     color: #ffffff;
-    font-size: 18px;
-    letter-spacing: 0;
-    line-height: normal;
-  }
-  
-  .v .our-story-reviews {
-    width: 158px;
-    height: 120px;
-    font-family: "Oxygen", Helvetica;
-    font-weight: 400;
-    color: #ffffff;
-    font-size: 18px;
-    letter-spacing: 0;
-    line-height: 30px;
-  }
-  
-  .v .group-6 {
-    margin-top: 55px;
-    width: 219px;
-    height: 208px;
-    position: relative;
-  }
-  
-  .v .customer-care {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 23px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Oxygen", Helvetica;
-    font-weight: 700;
-    color: #ffffff;
-    font-size: 18px;
-    letter-spacing: 0;
-    line-height: normal;
-  }
-  
-  .v .toll-free {
-    position: absolute;
-    top: 37px;
-    left: 0;
-    font-family: "Oxygen", Helvetica;
-    font-weight: 400;
-    color: #ffffff;
-    font-size: 18px;
-    letter-spacing: 0;
-    line-height: 30px;
-  }
-  
-  .v .span {
-    font-family: "Oxygen", Helvetica;
-    font-weight: 400;
-    color: #ffffff;
-    font-size: 18px;
-    letter-spacing: 0;
-    line-height: 30px;
-  }
-  
-  .v .text-wrapper-3 {
     font-weight: 700;
   }
-  
-  .v .group-7 {
-    position: absolute;
-    top: 172px;
-    left: 0;
-    width: 36px;
-    height: 36px;
+
+  .v .footer-social {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
   }
-  
-  .v .group-8 {
-    position: absolute;
-    top: 171px;
-    left: 50px;
-    width: 35px;
-    height: 35px;
-  }
-  
-  .v .group-9 {
-    position: absolute;
-    top: 172px;
-    left: 100px;
-    width: 35px;
-    height: 35px;
-  }
-  
-  .v .group-10 {
-    position: absolute;
-    top: 171px;
-    left: 150px;
-    width: 35px;
-    height: 35px;
+
+  .v .footer-social img {
+    width: 34px;
+    height: 34px;
   }
   
   .v .copy {
@@ -888,6 +765,32 @@
     height: 642px;
     background-color: #f6f4f1;
   }
+
+  .v .top-picks-slider {
+    position: absolute;
+    top: 178px;
+    left: 40px;
+    width: calc(100% - 80px);
+    height: 394px;
+    overflow: hidden;
+  }
+
+  .v .top-picks-track {
+    display: flex;
+    gap: 36px;
+    height: 100%;
+    width: max-content;
+    align-items: stretch;
+    transition: transform 0.8s ease;
+    will-change: transform;
+  }
+
+  .v .top-picks-track > [class^="product-box"] {
+    position: relative;
+    top: 0;
+    left: 0;
+    flex: 0 0 auto;
+  }
   
   .v .product-box {
     position: absolute;
@@ -1263,17 +1166,26 @@
     width: 388px;
   }
   
-  .v .group-15 {
+  .v .category-slider {
     position: absolute;
     top: 170px;
     left: 60px;
     width: calc(100% - 120px);
     max-width: 1366px;
     height: 385px;
+    overflow: hidden;
+  }
+
+  .v .group-15 {
+    width: max-content;
+    height: 100%;
     display: flex;
     gap: 48px;
-    justify-content: center;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    transition: transform 0.8s ease;
+    will-change: transform;
   }
   
   .v .box-4 {
@@ -1619,6 +1531,32 @@
     position: absolute;
     right: 0;
     width: 388px;
+  }
+
+  .v .best-sellers-slider {
+    position: absolute;
+    top: 176px;
+    left: 38px;
+    width: calc(100% - 76px);
+    height: 394px;
+    overflow: hidden;
+  }
+
+  .v .best-sellers-track {
+    display: flex;
+    gap: 36px;
+    height: 100%;
+    width: max-content;
+    align-items: stretch;
+    transition: transform 0.8s ease;
+    will-change: transform;
+  }
+
+  .v .best-sellers-track > [class^="product-box-"] {
+    position: relative;
+    top: 0;
+    left: 0;
+    flex: 0 0 auto;
   }
   
   .v .product-box-8 {
