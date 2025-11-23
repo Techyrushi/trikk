@@ -8,7 +8,7 @@
   
   .v .trikk {
     width: 100%;
-    max-width: 1600px;
+    max-width: 100%;
     min-height: 100vh;   /* full screen height, responsive */
     position: relative;
     margin-top: 90px;
@@ -48,7 +48,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 40px;
-    padding: 72px clamp(24px, 6vw, 120px);
+    padding: 72px clamp(60px, 8vw, 120px);
     box-sizing: border-box;
     margin-bottom: 0;
     max-width: 100%;
@@ -173,10 +173,10 @@
     gap: 40px;
     padding-top: 96px;
     padding-bottom: 96px;
-    padding-left: clamp(24px, 9vw, 120px);
-    padding-right: clamp(24px, 0vw, 120px);
+    padding-left: clamp(60px, 8vw, 120px);
+    padding-right: clamp(60px, 8vw, 120px);
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0;
     overflow: hidden;
     justify-items: start;
     align-items: start;
@@ -325,10 +325,18 @@
   .v .ats {
     position: absolute;
     top: 3213px;
-    left: 60px;
-    width: calc(100% - 120px);
-    max-width: 1483px;
+    left: 0;
+    width: 100%;
     height: auto;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .v .ats img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
   }
   
   .v .celebration {
@@ -341,11 +349,12 @@
     flex-direction: column;
     gap: 51px;
     background-color: #f6f4f1;
-    padding: 0 20px;
+    padding: 49px 0;
+    box-sizing: border-box;
   }
   
   .v .section-title {
-    margin: 49px auto 0;
+    margin: 0 auto;
     width: 100%;
     max-width: 512px;
     height: 87px;
@@ -677,11 +686,12 @@
     flex-direction: column;
     gap: 42px;
     background-color: #f6f4f1;
-    padding: 0 20px;
+    padding: 55px 0;
+    box-sizing: border-box;
   }
   
   .v .section-title-2 {
-    margin: 55px auto 0;
+    margin: 0 auto;
     width: 100%;
     max-width: 282px;
     height: 87px;
@@ -736,11 +746,12 @@
     min-height: 452px;
     display: flex;
     background-color: #f6f4f1;
-    padding: 0 20px;
+    padding: 64px 0;
+    box-sizing: border-box;
   }
   
   .v .info-6 {
-    margin: 64px auto 0;
+    margin: 0 auto;
     width: 100%;
     max-width: 1044px;
     height: 328px;
@@ -799,7 +810,8 @@
     left: 0;
     width: 100%;
     min-height: 642px;
-    padding: 0 20px;
+    padding: 0;
+    box-sizing: border-box;
   }
   
   .v .rectangle-6 {
@@ -814,10 +826,12 @@
   .v .top-picks-slider {
     position: absolute;
     top: 178px;
-    left: 40px;
-    width: calc(100% - 80px);
+    left: 0;
+    width: 100%;
     height: 394px;
     overflow: hidden;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   .v .top-picks-track {
@@ -1129,14 +1143,15 @@
   .v .section-title-3 {
     position: absolute;
     top: 48px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
     width: 100%;
     max-width: 474px;
     height: 87px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin: 0 auto;
   }
   
   .v .top-picks-for-you {
@@ -1189,7 +1204,8 @@
     width: 100%;
     min-height: 612px;
     background-color: #f6f4f1;
-    padding: 0 20px;
+    padding: 48px 0;
+    box-sizing: border-box;
   }
   
   .v .box-3 {
@@ -1214,11 +1230,15 @@
   .v .category-slider {
     position: absolute;
     top: 170px;
-    left: 60px;
-    width: calc(100% - 120px);
+    left: 0;
+    right: 0;
+    width: 100%;
     max-width: 1366px;
     height: 385px;
     overflow: hidden;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   .v .group-15 {
@@ -1361,14 +1381,15 @@
   .v .section-title-4 {
     position: absolute;
     top: 48px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
     width: 100%;
     max-width: 445px;
     height: 87px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin: 0 auto;
   }
   
   .v .explore-by-category {
@@ -1453,7 +1474,8 @@
     left: 0;
     width: 100%;
     min-height: 642px;
-    padding: 0 20px;
+    padding: 0;
+    box-sizing: border-box;
   }
   
   .v .product-box-6 {
@@ -1581,10 +1603,12 @@
   .v .best-sellers-slider {
     position: absolute;
     top: 176px;
-    left: 38px;
-    width: calc(100% - 76px);
+    left: 0;
+    width: 100%;
     height: 394px;
     overflow: hidden;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   .v .best-sellers-track {
@@ -1721,14 +1745,15 @@
   .v .section-title-5 {
     position: absolute;
     top: 49px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
     width: 100%;
     max-width: 436px;
     height: 87px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin: 0 auto;
   }
   
   .v .explore-bestsellers {
@@ -2098,9 +2123,9 @@
       gap: 40px;
       padding-top: 80px;
       padding-bottom: 80px;
-      padding-left: clamp(32px, 5vw, 96px);
-      padding-right: clamp(32px, 5vw, 96px);
-      margin: 0 auto;
+      padding-left: clamp(40px, 6vw, 96px);
+      padding-right: clamp(40px, 6vw, 96px);
+      margin: 0;
       justify-items: start;
       align-items: start;
     }
@@ -2118,9 +2143,43 @@
     }
     
     .v .icon-list {
-      padding: 68px clamp(32px, 5vw, 96px);
+      padding: 68px clamp(40px, 6vw, 96px);
       gap: 40px;
       justify-content: space-between;
+    }
+    
+    /* Section Padding - Desktop/Tablet Transition - Full Width */
+    .v .ats {
+      padding: 0;
+    }
+    
+    .v .celebration {
+      padding: 45px 0;
+    }
+    
+    .v .insta {
+      padding: 50px 0;
+    }
+    
+    .v .about {
+      padding: 55px 0;
+    }
+    
+    .v .pick-for-you {
+      padding: 0;
+    }
+    
+    .v .category {
+      padding: 45px 0;
+    }
+    
+    .v .best-sellers {
+      padding: 0;
+    }
+    
+    .v .footer {
+      padding-left: 0;
+      padding-right: 0;
     }
   }
   
@@ -2151,6 +2210,44 @@
     
     .v .trikk {
       margin-top: 70px;
+    }
+    
+    /* Section Padding - Tablet - Full Width */
+    .v .ats {
+      padding: 0;
+    }
+    
+    .v .celebration {
+      padding: 40px 0;
+    }
+    
+    .v .insta {
+      padding: 45px 0;
+    }
+    
+    .v .about {
+      padding: 50px 0;
+    }
+    
+    .v .pick-for-you {
+      padding: 0;
+    }
+    
+    .v .category {
+      padding: 40px 0;
+    }
+    
+    .v .best-sellers {
+      padding: 0;
+    }
+    
+    .v .icon-list {
+      padding: 64px clamp(30px, 5vw, 80px);
+    }
+    
+    .v .footer {
+      padding-left: clamp(30px, 5vw, 80px);
+      padding-right: clamp(30px, 5vw, 80px);
     }
     
     .v .logo {
@@ -2223,7 +2320,7 @@
     
     /* Service Icon Section - Tablet */
     .v .icon-list {
-      padding: 64px clamp(32px, 5vw, 96px);
+      padding: 64px clamp(30px, 5vw, 80px);
       gap: 40px;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -2249,9 +2346,9 @@
       gap: 40px;
       padding-top: 72px;
       padding-bottom: 72px;
-      padding-left: clamp(32px, 5vw, 80px);
-      padding-right: clamp(32px, 5vw, 80px);
-      margin: 0 auto;
+      padding-left: clamp(30px, 5vw, 80px);
+      padding-right: clamp(30px, 5vw, 80px);
+      margin: 0;
       justify-items: start;
       align-items: start;
     }
@@ -2302,6 +2399,52 @@
     
     .v .trikk {
       margin-top: 60px;
+    }
+    
+    /* Section Padding - Mobile - Full Width */
+    .v .ats {
+      padding: 0;
+    }
+    
+    .v .celebration {
+      padding: 32px 0;
+      gap: 32px;
+    }
+    
+    .v .insta {
+      padding: 40px 0;
+      gap: 32px;
+    }
+    
+    .v .about {
+      padding: 40px 0;
+    }
+    
+    .v .pick-for-you {
+      padding: 0;
+    }
+    
+    .v .category {
+      padding: 32px 0;
+    }
+    
+    .v .best-sellers {
+      padding: 0;
+    }
+    
+    .v .category-slider {
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+    
+    .v .icon-list {
+      padding: 56px 0;
+    }
+    
+    .v .footer {
+      padding-left: 0;
+      padding-right: 0;
     }
     
     .v .logo {
@@ -2366,7 +2509,7 @@
     
     /* Service Icon Section - Mobile */
     .v .icon-list {
-      padding: 56px 24px;
+      padding: 56px clamp(20px, 4vw, 40px);
       gap: 32px;
       flex-direction: row;
       justify-content: space-between;
@@ -2426,9 +2569,9 @@
       gap: 36px;
       padding-top: 64px;
       padding-bottom: 64px;
-      padding-left: 24px;
-      padding-right: 24px;
-      margin: 0 auto;
+      padding-left: clamp(20px, 4vw, 40px);
+      padding-right: clamp(20px, 4vw, 40px);
+      margin: 0;
       justify-items: start;
       align-items: start;
     }
