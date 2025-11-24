@@ -8,11 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Sliders & banner
   initBannerSlider();
-  initLoopingSlider({
+  initCategoryAutoSlide({
     sliderSelector: ".category-slider",
     trackSelector: ".group-15",
     itemSelector: ":scope > div",
-    speed: 0.35,
+    slideInterval: 3000, // 3 seconds per slide
   });
   initLoopingSlider({
     sliderSelector: ".top-picks-slider",
@@ -312,5 +312,160 @@ function initLoopingSlider(config) {
   measureWidth();
   applyTransform();
   animate();
+}
+
+// Category slider with auto-slide and smooth circular loop
+function initCategoryAutoSlide(config) {
+  const slider = document.querySelector(config.sliderSelector);
+  const track = slider ? slider.querySelector(config.trackSelector) : null;
+
+  if (!slider || !track || slider.dataset.autoSlide === "ready") return;
+
+  const items = Array.from(
+    track.querySelectorAll(config.itemSelector || ":scope > *")
+  );
+
+  if (items.length < 2) return;
+  slider.dataset.autoSlide = "ready";
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+  if (prefersReducedMotion.matches) return;
+
+  // Clone items for seamless loop
+  items.forEach((item) => {
+    const clone = item.cloneNode(true);
+    track.appendChild(clone);
+  });
+
+  let currentIndex = 0;
+  let itemWidth = 0;
+  let gap = 48; // Match CSS gap
+  let isTransitioning = false;
+  let autoSlideInterval = null;
+  const slideInterval = config.slideInterval || 3000;
+
+  function calculateItemWidth() {
+    if (items.length === 0) return;
+    const firstItem = items[0];
+    const secondItem = items[1];
+    
+    if (firstItem && secondItem) {
+      const firstRect = firstItem.getBoundingClientRect();
+      const secondRect = secondItem.getBoundingClientRect();
+      itemWidth = firstRect.width;
+      gap = secondRect.left - firstRect.right;
+    } else {
+      const rect = firstItem.getBoundingClientRect();
+      itemWidth = rect.width;
+      // Try to get gap from computed style
+      const computedGap = getComputedStyle(track).gap;
+      gap = computedGap ? parseInt(computedGap) : 48;
+    }
+  }
+
+  function getTotalOffset(index) {
+    return index * (itemWidth + gap);
+  }
+
+  function slideToIndex(index, instant = false) {
+    if (isTransitioning && !instant) return;
+    
+    isTransitioning = !instant;
+    const offset = getTotalOffset(index);
+    
+    if (instant) {
+      track.style.transition = "none";
+    } else {
+      track.style.transition = "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
+    }
+    
+    track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+    
+    if (!instant) {
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 800);
+    }
+  }
+
+  function nextSlide() {
+    if (isTransitioning) return;
+    
+    currentIndex++;
+    
+    // When we reach the first clone (index = items.length), it looks identical to first original
+    // Smoothly transition to it, creating seamless loop from last to first
+    if (currentIndex === items.length) {
+      // Smoothly show first clone (visually same as first original)
+      slideToIndex(currentIndex, false);
+      
+      // After transition completes, invisibly reset to first original
+      // This prepares for the next cycle without visible jump
+      setTimeout(() => {
+        if (currentIndex === items.length && !isTransitioning) {
+          currentIndex = 0;
+          slideToIndex(currentIndex, true);
+        }
+      }, 850);
+    } else if (currentIndex > items.length) {
+      // We've gone past clones, reset to corresponding original position
+      currentIndex = currentIndex - items.length;
+      slideToIndex(currentIndex, true);
+    } else {
+      // Normal forward progression through original items
+      slideToIndex(currentIndex, false);
+    }
+  }
+
+  function startAutoSlide() {
+    if (autoSlideInterval) return;
+    
+    autoSlideInterval = setInterval(() => {
+      nextSlide();
+    }, slideInterval);
+  }
+
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = null;
+    }
+  }
+
+  // Pause on hover
+  slider.addEventListener("mouseenter", stopAutoSlide);
+  slider.addEventListener("mouseleave", startAutoSlide);
+
+  // Pause on touch
+  let touchStartTime = 0;
+  slider.addEventListener("touchstart", () => {
+    touchStartTime = Date.now();
+    stopAutoSlide();
+  }, { passive: true });
+
+  slider.addEventListener("touchend", () => {
+    const touchDuration = Date.now() - touchStartTime;
+    if (touchDuration < 300) {
+      // Quick tap - advance one slide
+      nextSlide();
+    }
+    // Resume auto-slide after a delay
+    setTimeout(startAutoSlide, slideInterval);
+  }, { passive: true });
+
+  // Initialize
+  calculateItemWidth();
+  slideToIndex(0, true);
+
+  // Recalculate on resize
+  window.addEventListener("resize", () => {
+    calculateItemWidth();
+    slideToIndex(currentIndex, true);
+  });
+
+  // Start auto-slide
+  startAutoSlide();
 }
 
