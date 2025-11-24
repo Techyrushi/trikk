@@ -22,6 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
     speed: 0.4,
   });
   initLoopingSlider({
+    sliderSelector: ".celebration-slider",
+    trackSelector: ".celebration-track",
+    itemSelector: ":scope > .box, :scope > .box-2",
+    speed: 0.4,
+    direction: "left",
+  });
+  initLoopingSlider({
     sliderSelector: ".best-sellers-slider",
     trackSelector: ".best-sellers-track",
     itemSelector: ":scope > [class^='product-box-']",
@@ -256,6 +263,7 @@ function initLoopingSlider(config) {
   let lastPointerX = null;
   let manualVelocity = 0;
   const autoSpeed = config.speed ?? 0.35;
+  const direction = (config.direction === "right" ? "right" : "left");
   const hoverAutoFactor = config.hoverAutoFactor ?? 0.25;
   const manualScale = config.dragFactor ?? 0.45;
   const manualFriction = config.dragFriction ?? 0.92;
@@ -297,7 +305,8 @@ function initLoopingSlider(config) {
     if (baseWidth) {
       const activeAuto =
         autoSpeed * (isHovering ? hoverAutoFactor : 1);
-      position += activeAuto + manualVelocity;
+      const signedAuto = direction === "right" ? -activeAuto : activeAuto;
+      position += signedAuto + manualVelocity;
       manualVelocity *= manualFriction;
       if (Math.abs(manualVelocity) < 0.01) {
         manualVelocity = 0;
@@ -389,10 +398,10 @@ function initLoopingSlider(config) {
   }
 
   if (prevBtn) {
-    prevBtn.addEventListener("click", () => step(-1));
+    prevBtn.addEventListener("click", () => step(1));
   }
   if (nextBtn) {
-    nextBtn.addEventListener("click", () => step(1));
+    nextBtn.addEventListener("click", () => step(-1));
   }
 }
 
