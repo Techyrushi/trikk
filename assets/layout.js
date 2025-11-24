@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Sliders & banner
   initBannerSlider();
+  initCelebrationBanner();
   initCategoryAutoSlide({
     sliderSelector: ".category-slider",
     trackSelector: ".group-15",
@@ -179,6 +180,54 @@ function initBannerSlider() {
   }, 6000);
 }
 
+function initCelebrationBanner() {
+  const banner = document.querySelector(".celebration-banner");
+  if (!banner) return;
+
+  const imagePanel = banner.querySelector(".celebration-image");
+  const dots = banner.querySelectorAll(".banner-dot");
+
+  if (!imagePanel || !dots.length) return;
+
+  const slides = [
+    "https://c.animaapp.com/mi8igq1hn2mvbH/img/mask-group-11.png",
+    "https://c.animaapp.com/mi8igq1hn2mvbH/img/mask-group-2.png",
+    "https://c.animaapp.com/mi8igq1hn2mvbH/img/mask-group-3.png",
+  ];
+
+  let current = 0;
+
+  function applySlide(index) {
+    const image = slides[index];
+    if (!image) return;
+
+    imagePanel.style.transition = "background-image 0.6s ease-out";
+    imagePanel.style.backgroundImage = `url(${image})`;
+
+    dots.forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.add("active");
+      } else {
+        dot.classList.remove("active");
+      }
+    });
+  }
+
+  applySlide(current);
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      current = index;
+      applySlide(current);
+    });
+  });
+
+  setInterval(() => {
+    current = (current + 1) % slides.length;
+    applySlide(current);
+  }, 6000);
+}
+
 function initLoopingSlider(config) {
   const slider = document.querySelector(config.sliderSelector);
   const track = slider ? slider.querySelector(config.trackSelector) : null;
@@ -210,12 +259,25 @@ function initLoopingSlider(config) {
   const hoverAutoFactor = config.hoverAutoFactor ?? 0.25;
   const manualScale = config.dragFactor ?? 0.45;
   const manualFriction = config.dragFriction ?? 0.92;
+  let itemWidth = 0;
+  let gap = 36;
 
   function measureWidth() {
     const totalWidth = track.scrollWidth;
     baseWidth = totalWidth / 2;
     if (baseWidth === 0) {
       requestAnimationFrame(measureWidth);
+    }
+    // measure card width and gap for step navigation
+    const items = Array.from(track.querySelectorAll(config.itemSelector || ":scope > *"));
+    if (items.length >= 2) {
+      const rect1 = items[0].getBoundingClientRect();
+      const rect2 = items[1].getBoundingClientRect();
+      itemWidth = rect1.width;
+      gap = Math.max(0, rect2.left - rect1.right) || gap;
+    } else if (items.length === 1) {
+      const rect = items[0].getBoundingClientRect();
+      itemWidth = rect.width;
     }
   }
 
@@ -312,6 +374,26 @@ function initLoopingSlider(config) {
   measureWidth();
   applyTransform();
   animate();
+
+  // Arrow controls (prev/next) inside slider's parent section
+  const parent = slider.parentElement || document;
+  const prevBtn = parent.querySelector(".slider-btn.prev");
+  const nextBtn = parent.querySelector(".slider-btn.next");
+
+  function step(deltaCards = 1) {
+    const stepSize = (itemWidth || 280) + (gap || 36);
+    position += deltaCards * stepSize;
+    normalizePosition();
+    manualVelocity = 0;
+    applyTransform();
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => step(-1));
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => step(1));
+  }
 }
 
 // Category slider with auto-slide and smooth circular loop
