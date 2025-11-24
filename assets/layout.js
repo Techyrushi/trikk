@@ -260,19 +260,19 @@ function initLoopingSlider(config) {
     lastPointerX = clientX;
   }
 
-  slider.addEventListener("mouseenter", (event) => {
-    isHovering = true;
-    lastPointerX = event.clientX;
-  });
+  // slider.addEventListener("mouseenter", (event) => {
+  //   isHovering = true;
+  //   lastPointerX = event.clientX;
+  // });
 
-  slider.addEventListener("mouseleave", () => {
-    isHovering = false;
-    lastPointerX = null;
-  });
+  // slider.addEventListener("mouseleave", () => {
+  //   isHovering = false;
+  //   lastPointerX = null;
+  // });
 
-  slider.addEventListener("mousemove", (event) => {
-    handlePointerMove(event.clientX);
-  });
+  // slider.addEventListener("mousemove", (event) => {
+  //   handlePointerMove(event.clientX);
+  // });
 
   slider.addEventListener(
     "touchstart",
@@ -435,8 +435,8 @@ function initCategoryAutoSlide(config) {
   }
 
   // Pause on hover
-  slider.addEventListener("mouseenter", stopAutoSlide);
-  slider.addEventListener("mouseleave", startAutoSlide);
+  // slider.addEventListener("mouseenter", stopAutoSlide);
+  // slider.addEventListener("mouseleave", startAutoSlide);
 
   // Pause on touch
   let touchStartTime = 0;
